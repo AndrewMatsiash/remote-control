@@ -1,6 +1,7 @@
-export const parseParams = (params: string) => {
-	const command = params.split(" ")[0];
-	const coordinate = params.split(" ")[1];
+import { RawData } from "ws";
 
-	return { command, coordinate };
+export const parseParams = (data: RawData) => {
+	const paramsArr = data.toString().split(' ');
+	const [command, ...params] = paramsArr
+	return { command, params };
 };
