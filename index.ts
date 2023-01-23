@@ -4,13 +4,15 @@ import { WebSocketServer, createWebSocketStream } from "ws";
 import { MOUSE_MOVES } from "./src/constants/constants.js";
 import { mouseMoves } from "./src/commands/mouseMoves.js";
 import { parseParams } from "./src/helpers/parseParams.js";
-import { drawRectangle } from "./src/commands/drawRectagle.js";
+import { drawRectangle } from "./src/commands/drawRectangle.js";
 import { convertsFromStrToNum } from "./src/helpers/convertsFromStrToNum.js";
 import { drawSquare } from "./src/commands/drawSquare.js";
 import { drawCircle } from "./src/commands/drawCircle.js";
 import { printScreen } from "./src/commands/printScreen.js";
+import { logResult } from "./src/helpers/LogResult.js";
 
-const HTTP_PORT = 3000;
+
+const HTTP_PORT = 8181;
 const WS_PORT = 8080;
 
 console.log(`Start static http server on the ${HTTP_PORT} port!`);
@@ -21,8 +23,9 @@ const wss = new WebSocketServer({ port: WS_PORT });
 
 wss.on("connection", (ws) => {
 	ws.on("message", async (data) => {
-		const stream = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
+
 		const { command, params = [] } = parseParams(data);
+		logResult(command, params)
 
 		if (command === 'prnt_scrn') {
 			ws.send(command);
@@ -37,7 +40,6 @@ wss.on("connection", (ws) => {
 		}
 
 		if (command === "mouse_position") {
-			ws.send(command);
 			const { x, y } = await mouse.getPosition();
 			ws.send(`mouse_position ${x},${y}`);
 			return
@@ -62,8 +64,11 @@ wss.on("connection", (ws) => {
 			Array.isArray(paramsCircle) && await drawCircle(paramsCircle)
 			return
 		}
-
 	});
+});
 
-
+process.on("SIGINT", () => {
+	wss.close();
+	httpServer.close();
+	process.exit();
 });
