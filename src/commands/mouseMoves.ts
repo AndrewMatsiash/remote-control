@@ -1,8 +1,4 @@
 import { down, left, mouse, right, up } from "@nut-tree/nut-js";
-import { TMouseMoves } from "../types/types.js";
-import { MOUSE_MOVES } from "../constants/constants.js";
-
-
 
 export const mouseMoves = async (command: string, [coordinate]: string[]) => {
 
