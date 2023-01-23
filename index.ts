@@ -1,6 +1,6 @@
 import { httpServer } from "./src/http_server/index.js";
 import { mouse } from "@nut-tree/nut-js";
-import { WebSocketServer, createWebSocketStream } from "ws";
+import { WebSocketServer } from "ws";
 import { MOUSE_MOVES } from "./src/constants/constants.js";
 import { mouseMoves } from "./src/commands/mouseMoves.js";
 import { parseParams } from "./src/helpers/parseParams.js";
@@ -10,6 +10,7 @@ import { drawSquare } from "./src/commands/drawSquare.js";
 import { drawCircle } from "./src/commands/drawCircle.js";
 import { printScreen } from "./src/commands/printScreen.js";
 import { logResult } from "./src/helpers/LogResult.js";
+
 
 
 const HTTP_PORT = 8181;
