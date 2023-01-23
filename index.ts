@@ -47,7 +47,7 @@ wss.on("connection", (ws) => {
 
 		if (command === "draw_square") {
 			const paramsSquare = convertsFromStrToNum(params)
-			Array.isArray(paramsSquare) || await drawSquare(paramsSquare)
+			Array.isArray(paramsSquare) && await drawSquare(paramsSquare)
 			return
 		}
 
