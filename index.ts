@@ -8,6 +8,7 @@ import { calculateMovementTimesteps } from "@nut-tree/nut-js/dist/lib/mouse-move
 import { drawRectangle } from "./src/commands/drawRectagle.js";
 import { convertsFromStrToNum } from "./src/utils/convertsFromStrToNum.js";
 import { drawSquare } from "./src/commands/drawSquare.js";
+import { drawCircle } from "./src/commands/drawCircle.js";
 
 const HTTP_PORT = 3000;
 
@@ -37,9 +38,15 @@ wss.on("connection", (ws) => {
 			const paramsRectangle = convertsFromStrToNum(params)
 			Array.isArray(paramsRectangle) && await drawRectangle(paramsRectangle)
 		}
+
 		if (command === "draw_square") {
-			const paramsRectangle = convertsFromStrToNum(params)
-			Array.isArray(paramsRectangle) || await drawSquare(paramsRectangle)
+			const paramsSquare = convertsFromStrToNum(params)
+			Array.isArray(paramsSquare) || await drawSquare(paramsSquare)
+		}
+
+		if (command === "draw_circle") {
+			const paramsCircle = convertsFromStrToNum(params)
+			Array.isArray(paramsCircle) && await drawCircle(paramsCircle)
 		}
 
 		ws.send(command);
