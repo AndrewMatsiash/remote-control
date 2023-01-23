@@ -1,0 +1,1 @@
+export type TMouseMoves = "mouse_up" | "mouse_down" | "mouse_left" | "mouse_right";
